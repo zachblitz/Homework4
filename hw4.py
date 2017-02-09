@@ -18,13 +18,13 @@ infile = "nytimes_data.html"
 try:
 	f = open(infile, 'r')
 	nytimes_data = f.read()
-	f.close()
+	
 except:
 	r = requests.get("http://www.nytimes.com")
 	nytimes_data = r.text
 	f = open(infile, 'w')
 	f.write(nytimes_data)
-	f.close()
+	
 
 
 #####################
@@ -51,8 +51,17 @@ except:
 ## Write your code to complete this task here.
 ## HINT: Remember that you'll need to open the file you created in Part 1, read the contets into one big string, and make a BeautifulSoup object out of that string!
 ## NOTE that the provided link does not include saving the online data in a file as part of the process. But it still provides very useful hints/tricks about how to look for and identify the headlines on the NY Times page.
+headlines = []
+soup = BeautifulSoup(nytimes_data, 'html.parser')
+for heading in soup.find_all(class_= "story-heading"):
+	if heading.a:
+		headlines.append(heading.a.text.replace("\n", " ").strip())
+	else:
+		headlines.append((heading.contents[0].strip()))
 
+nytimes_headlines = headlines[0:10]
 
+print(nytimes_headlines)
 
 
 #####################
