@@ -61,7 +61,7 @@ for heading in soup.find_all(class_= "story-heading"):
 
 nytimes_headlines = headlines[0:10]
 
-print(nytimes_headlines)
+
 
 
 #####################
@@ -94,11 +94,21 @@ umsi_titles = {}
 ## Find the container that holds the name that belongs to that person (HINT: look for something unique, like a property element...)
 ## Find the container that holds the title that belongs to that person (HINT: a class name)
 ## Grab the text of each of those elements and put them in the dictionary umsi_titles properly
+name = soup.find_all("div", {"property":"dc:title"})
+title = soup.find_all("div", {"class": "field-name-field-person-titles"})
 
+names = []
+titles = []
 
+for x in name:
+	names.append(x.text)
+for x in title:
+	titles.append(x.text)
 
-
-
+i = 0 
+for x in range(20):
+	umsi_titles[names[i]] = titles[i]
+	i+=1
 
 
 
@@ -111,7 +121,7 @@ class HW4_Part2(unittest.TestCase):
 	def test_first_last_elem(self):
 		self.assertEqual(type(nytimes_headlines[0]),type(""), "Testing that the first type in the nytimes_headlines list is a string")
 		self.assertEqual(type(nytimes_headlines[-1]),type(""), "Testing that the last type in the nytimes_headlines list is a string")
-	def length_of_ten(self):
+	def test_length_of_ten(self):
 		self.assertEqual(len(nytimes_headlines),10, "Testing that there are ten headlines in the list")
 
 class HW4_Part3(unittest.TestCase):
