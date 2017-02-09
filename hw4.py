@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 ## SI 206 - W17 - HW4
 ## COMMENT WITH:
-## Your section day/time:
+## Your section day/time: Thurs 3-4pm
 ## Any names of people you worked with on this assignment:
 
 #####################
@@ -13,8 +13,18 @@ from bs4 import BeautifulSoup
 ## PART 1 (100 points) - Get the HTML data from http://www.nytimes.com (the New York Times home page) and save it in a file called nytimes_data.html.
 
 ## Write the Python code to do so here.
+infile = "nytimes_data.html"
 
-
+try:
+	f = open(infile, 'r')
+	nytimes_data = f.read()
+	f.close()
+except:
+	r = requests.get("http://www.nytimes.com")
+	nytimes_data = r.text
+	f = open(infile, 'w')
+	f.write(nytimes_data)
+	f.close()
 
 
 #####################
